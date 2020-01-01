@@ -1,3 +1,7 @@
+// import sharp from 'sharp';
+// import path from 'path';
+//  import fs from 'fs';
+
 import Post from '../models/Post';
 
 class PostController {
@@ -11,6 +15,11 @@ class PostController {
         const { author, place, description, hashtags } = req.body;
         const { filename: image } = req.file;
 
+        /* await sharp(req.file.path)
+            .resize(500)
+            .jpeg({ quality: 70 })
+            .toFile(path.resolve(req.file.destination, 'resized', image)); */
+
         const post = await Post.create({
             author,
             place,
@@ -18,6 +27,8 @@ class PostController {
             hashtags,
             image,
         });
+
+        req.io.emit('post', post);
 
         return res.json(post);
     }

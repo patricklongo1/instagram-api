@@ -2,9 +2,15 @@ import Post from '../models/Post';
 
 class LikeController {
     async store(req, res) {
-        const target = req.params.postId;
-        console.log(target);
-        return res.json({ ok: true });
+        const { postId } = req.params;
+
+        const target = await Post.findById(postId);
+        target.likes += 1;
+        await target.save();
+
+        req.io.emit('like', target);
+
+        return res.json(target);
     }
 }
 
