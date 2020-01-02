@@ -1,6 +1,6 @@
-// import sharp from 'sharp';
-// import path from 'path';
-//  import fs from 'fs';
+import sharp from 'sharp';
+import path from 'path';
+import fs from 'fs';
 
 import Post from '../models/Post';
 
@@ -15,10 +15,12 @@ class PostController {
         const { author, place, description, hashtags } = req.body;
         const { filename: image } = req.file;
 
-        /* await sharp(req.file.path)
+        await sharp(req.file.path)
             .resize(500)
             .jpeg({ quality: 70 })
-            .toFile(path.resolve(req.file.destination, 'resized', image)); */
+            .toFile(path.resolve(req.file.destination, 'resized', image));
+
+        fs.unlinkSync(req.file.path);
 
         const post = await Post.create({
             author,

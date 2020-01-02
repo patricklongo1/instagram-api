@@ -22,6 +22,9 @@ app.use((req, res, next) => {
 
 app.use(cors());
 app.use(express.json());
-app.use('/files', express.static(resolve(__dirname, '..', 'uploads')));
+app.use(
+    '/files',
+    express.static(resolve(__dirname, '..', 'uploads', 'resized'))
+);
 app.use(routes);
 app.listen(3333);
