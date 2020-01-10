@@ -15,12 +15,13 @@ mongoose.connect('mongodb://localhost:27017/instagram', {
     useUnifiedTopology: true,
 });
 
+app.use(cors());
+
 app.use((req, res, next) => {
     req.io = io;
     next();
 });
 
-app.use(cors());
 app.use(express.json());
 app.use(
     '/files',

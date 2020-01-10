@@ -14,7 +14,6 @@ class PostController {
     async store(req, res) {
         const { author, place, description, hashtags } = req.body;
         const { filename: image } = req.file;
-
         await sharp(req.file.path)
             .resize(500)
             .jpeg({ quality: 70 })
